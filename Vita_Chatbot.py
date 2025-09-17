@@ -1,17 +1,16 @@
 import tkinter as tk
-from tkinter import scrolledtext
+import tkinter.font as tkFont
+from datetime import datetime
 
-# Enhanced response logic
+# ------------------------
+# Response Logic
+# ------------------------
 def get_response(user_input):
     user_input = user_input.lower()
 
-    # Try solving math expressions
     try:
         if any(op in user_input for op in ["+", "-", "*", "/", "**", "%"]):
-            result = eval(user_input)  
-            # safe for simple math only
-            
-            return f"The answer is {result}"
+            return f"The answer is {eval(user_input)}"
     except:
         return "Sorry, I couldn't calculate that. Please try a valid math expression."
 
@@ -20,27 +19,27 @@ def get_response(user_input):
         "vita": "Yes, How can I help you today?",
         "hi": "Hi there! How are you?",
         "how are you": "I'm just a bot, but I'm doing great! How about you?",
-        "what is your name": "I'm Vita, your virtual assistant.",
+        "your name": "I'm Vita, your virtual assistant.",
         "who created you": "Nishit created me using Python and Tkinter!",
         "thank you": "You're welcome! 😊",
         "age": "I don't have an age like humans. I'm timeless! 😉",
         "joke": "Why did the computer go to the doctor? Because it caught a virus! 😄",
         "bye": "Goodbye! Have a nice day!",
         "quit": "Goodbye! Have a nice day!",
+        "ok": "Yes. Need any help? ",
 
         # Company FAQs
         "what services do you offer": "We offer web development and AI solutions.",
         "where are you located": "Our head office is in Indore, India, but we serve clients globally.",
-        "how can i contact you": "You can contact us via email at abcd@abc.com or call +91 9234567890.",
-        "what is your working hours": "We work Monday to Friday, 10 AM to 7 PM IST.",
-        "do you offer support": "Yes, we provide 24/7 support for our clients through chat, email, and phone.",
-        "what technologies do you use": "We use PHP, JavaScript, React, Node.js, HTML, CSS and more for our solutions.",
-        "how much does a project cost": "Project costs depend on requirements. Please contact us with your project details for a quote.",
+        "contact": "You can contact us via email at abcd@abc.com or call +91 9234567890.",
+        "working hours": "We work Monday to Friday, 10 AM to 7 PM IST.",
+        "support": "Yes, we provide 24/7 support for our clients through chat, email, and phone.",
+        "technologies do you use": "We use PHP, JavaScript, React, Node.js, HTML, CSS and more for our solutions.",
+        "project cost": "Project costs depend on requirements. Please contact us with your project details for a quote.",
         "how experienced is your team": "Our team has over 9 years of experience in software development and tech consulting.",
-        "do you provide custom solutions": "Yes, all our solutions are tailored to the client's requirements."
+        "provide custom solutions": "Yes, all our solutions are tailored to the client's requirements."
     }
 
-    # Special help command
     if user_input == "help":
         return (
             "Here are the things you can ask me:\n"
@@ -50,7 +49,7 @@ def get_response(user_input):
             "- Who Created You\n"
             "- Thank You / Bye / Quit\n"
             "- Age / Joke\n"
-            "- You Can Also A Claculator\n\n"
+            "- You Can Also A Calculator\n\n"
             "Company Faqs:\n"
             "- What Services Do You Offer\n"
             "- Where Are You Located\n"
@@ -63,52 +62,111 @@ def get_response(user_input):
             "- Do You Provide Custom Solutions\n"
         )
 
-    # Check for keywords
     for key in responses:
         if key in user_input:
             return responses[key]
 
     return "Sorry, I don't understand that. Type 'Help' to see what I can answer."
 
-# Function to handle sending message
+
+# ------------------------
+# Add Chat Bubble
+# ------------------------
+def add_message(sender, message, align="left", color="#FFFFFF"):
+    time_now = datetime.now().strftime("%H:%M")
+
+    outer_frame = tk.Frame(chat_frame, bg="white")
+    outer_frame.pack(fill="x", pady=2, anchor="w" if align == "left" else "e")
+
+    top_row = tk.Frame(outer_frame, bg="white")
+    if sender == "You":
+        tk.Label(top_row, text="👦🏻", font=("Arial", 20), bg="white").pack(side="right")
+        tk.Label(top_row, text=time_now, font=("Arial", 8), bg="white", fg="black").pack(side="right", padx=(0, 2))
+    else:
+        tk.Label(top_row, text="🤖", font=("Arial", 20), bg="white").pack(side="left")
+        tk.Label(top_row, text=time_now, font=("Arial", 8), bg="white", fg="black").pack(side="left", padx=(1, 0))
+    top_row.pack(fill="x")
+
+    font = tkFont.Font(family="Arial", size=12) 
+    max_width_px = 350
+    chars_per_line = max_width_px // font.measure("a")
+    line_count = message.count("\n") + 1
+    lines = max(line_count, (len(message) // chars_per_line) + 1)
+    width = min(len(message), chars_per_line)
+
+    msg_text = tk.Text(
+        outer_frame, bg=color, fg="white", wrap="word", font=("Arial", 12),
+        relief="flat", padx=10, pady=5, height=lines, width=width
+    )
+    msg_text.insert("1.0", message)
+    msg_text.configure(state="disabled")  
+    msg_text.pack(anchor="w" if align == "left" else "e", padx=15, pady=2)
+
+    chat_canvas.update_idletasks()
+    chat_canvas.yview_moveto(1.0)
+
+
+# ------------------------
+# Send Message
+# ------------------------
 def send_message():
     user_input = user_entry.get()
-    if user_input.strip() != "":
-        chat_area.config(state='normal')
-        chat_area.insert(tk.END, "You: " + user_input + "\n")
-        chat_area.insert(tk.END, "Vita: " + get_response(user_input) + "\n\n")
-        chat_area.config(state='disabled')
-        chat_area.yview(tk.END)  # Scroll to the bottom
+    if user_input.strip():
+        add_message("You", user_input, align="right", color="#4961f6")
+        response = get_response(user_input)
+        add_message("Vita", response, align="left", color="#a7caff")
         user_entry.delete(0, tk.END)
-    if user_input == "quit" or user_input == "bye":
-        root.quit()  
-        # Close the window
-        # root.destroy()
+    if user_input.lower() in ["quit", "bye"]:
+        root.destroy()
 
-# GUI setup
+
+# ------------------------
+# GUI Setup
+# ------------------------
 root = tk.Tk()
 root.title("Vita ChatBot")
-root.geometry("500x600")
-root.config(bg="#E6E6FA")
+root.geometry("440x650")
+root.config(bg="#FFFFFF")
 
-title_label = tk.Label(root, text="💬 Vita ChatBot", font=("Arial", 24), fg="white", bg="#6A5ACD")
+title_label = tk.Label(root, text="⌬ Vita Chatbot", font=("Helvetica", 18, "bold"),
+                       fg="white", bg="#4961f6", pady=10)
 title_label.pack(fill=tk.X)
 
-chat_area = scrolledtext.ScrolledText(root, state='disabled', wrap=tk.WORD  ,bg="#F8F8FF", fg="#333333", font=("Arial", 12))
-chat_area.pack(padx=10, pady=10, fill=tk.BOTH, expand=True)
+chat_area_frame = tk.Frame(root, bg="white")  
+chat_area_frame.pack(fill="both", expand=True, padx=10, pady=(10, 0))
 
-user_entry = tk.Entry(root, font=("Arial", 14))
-user_entry.insert(0, "Help")  # <-- This line adds default text
-user_entry.pack(padx=10, pady=10, fill=tk.X)
-user_entry.bind("<Return>", lambda event: send_message())  # Send on Enter key
+chat_canvas = tk.Canvas(chat_area_frame, bg="white", highlightthickness=0)
+scrollbar = tk.Scrollbar(chat_area_frame, orient="vertical", command=chat_canvas.yview)
 
-send_button = tk.Button(root, text="Send", bg="#6A5ACD", fg="white", font=("Arial", 12, "bold") ,command=send_message)
-send_button.pack(pady=5)
+chat_frame = tk.Frame(chat_canvas, bg="white")
+chat_frame.bind("<Configure>", lambda e: chat_canvas.configure(scrollregion=chat_canvas.bbox("all")))
 
-# Startup message
-chat_area.config(state='normal')
-chat_area.insert(tk.END, "Vita: Hello! I'm Vita.\n")
-chat_area.insert(tk.END, "Vita: Type 'Help' to see what I can do.\n\n")
-chat_area.config(state='disabled')
+chat_window = chat_canvas.create_window((0, 0), window=chat_frame, anchor="nw")
+
+def resize_chat_frame(event):
+    chat_canvas.itemconfig(chat_window, width=event.width)
+
+chat_canvas.bind("<Configure>", resize_chat_frame)
+chat_canvas.configure(yscrollcommand=scrollbar.set)
+
+chat_canvas.pack(side="left", fill="both", expand=True)
+scrollbar.pack(side="right", fill="y")
+
+bottom_frame = tk.Frame(root, bg="#ffffff")
+bottom_frame.pack(side="bottom", fill="x", padx=10, pady=10)
+
+user_entry = tk.Entry(bottom_frame, font=("Arial", 14), relief="solid", bd=1, bg="#4961f6", fg="white")
+user_entry.insert(0, "Help")
+user_entry.pack(side="left", fill="x", expand=True, padx=(0, 10))
+user_entry.bind("<Return>", lambda event: send_message())
+
+send_button = tk.Button(
+    bottom_frame, text="⌯⌲", bg="#4961f6", fg="white", font=("Arial", 15, "bold"),
+    width=3, command=send_message
+)
+send_button.pack(side="right")
+
+add_message("Vita", "Hello! I'm Vita, your assistant.", align="left", color="#a7caff")
+add_message("Vita", "Type 'Help' to see what I can do.", align="left", color="#a7caff")
 
 root.mainloop()
