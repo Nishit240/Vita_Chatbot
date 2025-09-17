@@ -11,7 +11,7 @@ It provides a graphical user interface (GUI) where users can interact with the b
 - 🛠️ Customizable – Add or modify responses in the get_response() function.
 
 ### 🖼️ Screenshots
-#### ✨ New ChatBot
+### ✨ New ChatBot
 <h3>Ui of the Vita</h3>
 <img width="584" height="846" alt="Screenshot 2025-09-17 140232" src="https://github.com/user-attachments/assets/01ba4d36-e45c-4628-8556-a19238b9075e" />
 <h3> Basic chat with Vita</h3>
@@ -21,7 +21,7 @@ It provides a graphical user interface (GUI) where users can interact with the b
 
 <hr>
 
-#### ✨ Old ChatBot
+### ✨ Old ChatBot
 <img width="620" height="787" alt="Screenshot 2025-09-16 164113" src="https://github.com/user-attachments/assets/5f13542b-e899-4ef6-8afc-c58f6ac3df70" />
 <img width="619" height="789" alt="Screenshot 2025-09-16 164134" src="https://github.com/user-attachments/assets/3d5e66c8-3d9d-4a0a-849c-f4195c564b04" />
 
