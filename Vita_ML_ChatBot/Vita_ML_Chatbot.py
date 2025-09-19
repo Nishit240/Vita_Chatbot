@@ -6,11 +6,12 @@ import string
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.naive_bayes import MultinomialNB
 from sklearn.pipeline import make_pipeline
+import pyjokes
 
 # -----------------------------
 # 1) Load training data from JSON
 # -----------------------------
-with open(r"ml_chatbot\training_data.json", encoding="utf-8") as f:
+with open(r"project\Vita_ML_ChatBot\training_data.json", encoding="utf-8") as f:
     training_data = json.load(f)
 
 
@@ -33,21 +34,26 @@ intent_responses = {
     "negative": ["no", "nah", "nope", "not really"]
      
 }
+def show_joke():
+    joke_1 = pyjokes.get_joke(language="en", category="neutral")
+    return joke_1   # return instead of print
 
 fallback_answers = {
     "greeting": "Hello! How can I help you today?",
     "goodbye": "Goodbye! Have a nice day! 👋",
     "thanks": "You're welcome! 😊",
     "please": "Please, I'd be happy to help!",
-    "joke": "Why did the computer go to the doctor? Because it caught a virus! 😄",
+    "joke": show_joke,   # store function, not value
     "affirmative": "Great! How can I assist you further?",
     "negative": "Alright, no problem! Let me know if you need anything else."
 }
+
 
 def clean_text(text):
     text = text.lower()
     text = text.translate(str.maketrans("", "", string.punctuation))
     return text
+
 
 # -----------------------------
 # 3) Get Response
@@ -67,7 +73,11 @@ def get_response(user_input):
     for intent, keywords in intent_responses.items():
         for word in keywords:
             if word in cleaned:
-                return fallback_answers[intent]
+                # Special case for jokes → call function every time
+                if intent == "joke":
+                    return show_joke() + " 😄"
+                else:
+                    return fallback_answers[intent]
 
     # Check JSON-based responses
     for key in training_data:
