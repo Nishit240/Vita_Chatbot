@@ -27,8 +27,8 @@ It provides a graphical user interface (GUI) where users can interact with the b
 
 ### 📌 To-Do / Future Improvements
 
-- Add natural language processing (NLP) for smarter answers.
+- ✅ Integrate with a database for dynamic FAQs.
 
-- Integrate with a database for dynamic FAQs.
+- Add natural language processing (NLP) for smarter answers.
 
 - Add voice input/output support.
