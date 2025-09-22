@@ -7,45 +7,46 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.naive_bayes import MultinomialNB
 from sklearn.pipeline import make_pipeline
 import pyjokes
-
+import warnings
+warnings.filterwarnings("ignore", category=UserWarning)
 # -----------------------------
 # 1) Load training data from JSON
 # -----------------------------
-with open(r"project\Vita_ML_ChatBot\training_data.json", encoding="utf-8") as f:
+with open(r"C:\Main\Education\PYTHON\project\Vita_ML_ChatBot\training_data.json", encoding="utf-8") as f:
     training_data = json.load(f)
 
 
 X_train = list(training_data.keys())
 y_train = list(training_data.values())
 
-model = make_pipeline(TfidfVectorizer(), MultinomialNB())
+model = make_pipeline(TfidfVectorizer(ngram_range=(1,2)), MultinomialNB())
 model.fit(X_train, y_train)
 
 # -----------------------------
 # 2) Keyword fallback
 # -----------------------------
 intent_responses = {
-    "greeting": ["hello", "hi", "hey", "good morning", "good evening"],
+    "greeting": ["hey", "good morning", "good evening"],
     "goodbye": ["bye", "exit", "quit", "see you"],
     "thanks": ["thank you", "thanks", "thx"],
     "joke": ["joke", "funny", "laugh"],
-    "please": ["please", "can you", "would you", "plx", "pls"],
-    "affirmative": ["yes", "yeah", "yup", "sure", "ok", "okay"],
-    "negative": ["no", "nah", "nope", "not really"]
+    # "please": ["please", "can you", "would you", "plx", "pls"],
+    # "affirmative": ["yes", "yeah", "yup", "sure", "ok", "okay"],
+    # "negative": ["no", "nah", "nope", "not really"]
      
 }
 def show_joke():
     joke_1 = pyjokes.get_joke(language="en", category="neutral")
-    return joke_1   # return instead of print
+    return joke_1
 
 fallback_answers = {
     "greeting": "Hello! How can I help you today?",
     "goodbye": "Goodbye! Have a nice day! 👋",
     "thanks": "You're welcome! 😊",
-    "please": "Please, I'd be happy to help!",
-    "joke": show_joke,   # store function, not value
-    "affirmative": "Great! How can I assist you further?",
-    "negative": "Alright, no problem! Let me know if you need anything else."
+    "joke": show_joke,
+    # "please": "Please, I'd be happy to help!",
+    # "affirmative": "Great! How can I assist you further? 🙂💡",
+    # "negative": "Alright, no problem! Let me know if you need anything else. 🙂✌️"
 }
 
 
@@ -68,6 +69,11 @@ def get_response(user_input):
     except:
         return "Sorry, I couldn't calculate that. Please try a valid math expression."
 
+    # Check JSON-based responses
+    for key in training_data:
+        if key in user_input_clean:
+            return training_data[key]
+        
     # Keyword fallback
     cleaned = clean_text(user_input)
     for intent, keywords in intent_responses.items():
@@ -79,17 +85,12 @@ def get_response(user_input):
                 else:
                     return fallback_answers[intent]
 
-    # Check JSON-based responses
-    for key in training_data:
-        if key in user_input_clean:
-            return training_data[key]
 
     # ML-based prediction
     try:
         return model.predict([user_input])[0]
     except:
         return "Sorry, I don't understand that.\nType 'Help' to see what I can answer."
-
 # -----------------------------
 # 4) GUI 
 # -----------------------------
@@ -115,7 +116,7 @@ def add_message(sender, message, align="left", color="#FFFFFF"):
     width = min(len(message), chars_per_line)
 
     msg_text = tk.Text(
-        outer_frame, bg=color, fg="white", wrap="word", font=("Arial", 12),
+        outer_frame, bg=color, fg="black", wrap="word", font=("Arial", 12),
         relief="flat", padx=10, pady=5, height=lines, width=width
     )
     msg_text.insert("1.0", message)
@@ -131,9 +132,9 @@ def add_message(sender, message, align="left", color="#FFFFFF"):
 def send_message():
     user_input = user_entry.get()
     if user_input.strip():
-        add_message("You", user_input, align="right", color="#4961f6")
+        add_message("You", user_input, align="right", color="#96A78D")
         response = get_response(user_input)
-        add_message("Vita", response, align="left", color="#a7caff")
+        add_message("Vita", response, align="left", color="#D9E9CF")
         user_entry.delete(0, tk.END)
     if user_input.lower() in ["quit", "bye"]:
         root.destroy()
@@ -144,10 +145,10 @@ def send_message():
 root = tk.Tk()
 root.title("Vita ChatBot")
 root.geometry("440x650")
-root.config(bg="#4961f6")
+root.config(bg="#96A78D")
 
 title_label = tk.Label(root, text="⌬ Vita Chatbot", font=("Helvetica", 20, "bold"),
-                       fg="white", bg="#4961f6", pady=10)
+                       fg="white", bg="#96A78D", pady=10)
 title_label.pack(fill=tk.X)
 
 chat_area_frame = tk.Frame(root, bg="white")  
@@ -170,21 +171,22 @@ chat_canvas.configure(yscrollcommand=scrollbar.set)
 chat_canvas.pack(side="left", fill="both", expand=True)
 scrollbar.pack(side="right", fill="y")
 
-bottom_frame = tk.Frame(root, bg="#4961f6")
+bottom_frame = tk.Frame(root, bg="#96A78D")
 bottom_frame.pack(side="bottom", fill="x", padx=10, pady=10)
 
-user_entry = tk.Entry(bottom_frame, font=("Arial", 14), relief="solid", bd=1, bg="#4961f6", fg="white")
+user_entry = tk.Entry(bottom_frame, font=("Arial", 14), relief="solid", bd=1, bg="#96A78D", fg="white")
 user_entry.insert(0, "Help")
 user_entry.pack(side="left", fill="x", expand=True, padx=(0, 10))
 user_entry.bind("<Return>", lambda event: send_message())
 
 send_button = tk.Button(
-    bottom_frame, text="⌯⌲", bg="#4961f6", fg="white", font=("Arial", 15, "bold"),
+    bottom_frame, text="⌯⌲", bg="#96A78D", fg="white", font=("Arial", 15, "bold"),
     width=3, command=send_message
 )
 send_button.pack(side="right")
 
-add_message("Vita", "Hello! I'm Vita, your assistant.", align="left", color="#a7caff")
-add_message("Vita", "Type 'Help' to see what I can do.", align="left", color="#a7caff")
+add_message("Vita", "Hello! I'm Vita, your assistant.", align="left", color="#D9E9CF")
+add_message("Vita", "Type 'Help' to see what I can do.", align="left", color="#D9E9CF")
+
 
 root.mainloop()
