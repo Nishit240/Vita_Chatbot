@@ -13,11 +13,13 @@ It provides a graphical user interface (GUI) where users can interact with the b
 ### 🖼️ Screenshots
 ### ✨ New ChatBot
 <h3>Ui of the Vita</h3>
-<img width="550" height="1079" alt="Screenshot 2025-09-20 114726" src="https://github.com/user-attachments/assets/4f3fa41d-3df0-4aab-84f4-b70fa5be2b1c" />
+<img width="544" height="933" alt="Screenshot 2025-09-22 120335" src="https://github.com/user-attachments/assets/6782ba57-3f14-41b7-b84a-e5f7e4e4eae3" />
+
 <h3> Basic chat with Vita</h3>
-<img width="591" height="848" alt="Screenshot 2025-09-17 140240" src="https://github.com/user-attachments/assets/383fab5a-f4e9-48d8-865e-315c2fd22160" />
+<img width="546" height="936" alt="Screenshot 2025-09-22 120444" src="https://github.com/user-attachments/assets/f4fe88bb-37d6-45c2-8f11-7849398c3ffa" />
+
 <h3> Dynamic nature of the Vita</h3>
-<img width="1306" height="1079" alt="Screenshot 2025-09-17 140336" src="https://github.com/user-attachments/assets/fc31bdf0-05a0-455e-81ac-0102cdbe5d23" />
+<img width="1919" height="1045" alt="Screenshot 2025-09-22 120604" src="https://github.com/user-attachments/assets/d1d04304-78c8-4942-9a64-323134db8b22" />
 
 <hr>
 
