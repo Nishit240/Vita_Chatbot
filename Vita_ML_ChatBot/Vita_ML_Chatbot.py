@@ -91,21 +91,22 @@ def get_response(user_input):
         return model.predict([user_input])[0]
     except:
         return "Sorry, I don't understand that.\nType 'Help' to see what I can answer."
+    
 # -----------------------------
 # 4) GUI 
 # -----------------------------
 def add_message(sender, message, align="left", color="#FFFFFF"):
     time_now = datetime.now().strftime("%H:%M")
-    outer_frame = tk.Frame(chat_frame, bg="white")
+    outer_frame = tk.Frame(chat_frame, bg="#F0F0F0")
     outer_frame.pack(fill="x", pady=2, anchor="w" if align == "left" else "e")
 
-    top_row = tk.Frame(outer_frame, bg="white")
+    top_row = tk.Frame(outer_frame, bg="#F0F0F0")
     if sender == "You":
-        tk.Label(top_row, text="👦🏻", font=("Arial", 20), bg="white").pack(side="right")
-        tk.Label(top_row, text=time_now, font=("Arial", 8), bg="white", fg="black").pack(side="right", padx=(0, 2))
+        tk.Label(top_row, text="👦🏻", font=("Arial", 20), bg="#F0F0F0").pack(side="right")
+        tk.Label(top_row, text=time_now, font=("Arial", 8), bg="#F0F0F0", fg="black").pack(side="right", padx=(0, 2))
     else:
-        tk.Label(top_row, text="🤖", font=("Arial", 20), bg="white").pack(side="left")
-        tk.Label(top_row, text=time_now, font=("Arial", 8), bg="white", fg="black").pack(side="left", padx=(1, 0))
+        tk.Label(top_row, text="🤖", font=("Arial", 20), bg="#F0F0F0").pack(side="left")
+        tk.Label(top_row, text=time_now, font=("Arial", 8), bg="#F0F0F0", fg="black").pack(side="left", padx=(1, 0))
     top_row.pack(fill="x")
 
     font = tkFont.Font(family="Arial", size=12) 
@@ -148,16 +149,16 @@ root.geometry("440x650")
 root.config(bg="#96A78D")
 
 title_label = tk.Label(root, text="⌬ Vita Chatbot", font=("Helvetica", 20, "bold"),
-                       fg="white", bg="#96A78D", pady=10)
+                       fg="#ffffff", bg="#96A78D", pady=10)
 title_label.pack(fill=tk.X)
 
-chat_area_frame = tk.Frame(root, bg="white")  
+chat_area_frame = tk.Frame(root, bg="#F0F0F0")  
 chat_area_frame.pack(fill="both", expand=True, padx=10, pady=(10, 0))
 
-chat_canvas = tk.Canvas(chat_area_frame, bg="white", highlightthickness=0)
+chat_canvas = tk.Canvas(chat_area_frame, bg="#F0F0F0", highlightthickness=0)
 scrollbar = tk.Scrollbar(chat_area_frame, orient="vertical", command=chat_canvas.yview)
 
-chat_frame = tk.Frame(chat_canvas, bg="white")
+chat_frame = tk.Frame(chat_canvas, bg="#F0F0F0")
 chat_frame.bind("<Configure>", lambda e: chat_canvas.configure(scrollregion=chat_canvas.bbox("all")))
 
 chat_window = chat_canvas.create_window((0, 0), window=chat_frame, anchor="nw")
@@ -174,13 +175,13 @@ scrollbar.pack(side="right", fill="y")
 bottom_frame = tk.Frame(root, bg="#96A78D")
 bottom_frame.pack(side="bottom", fill="x", padx=10, pady=10)
 
-user_entry = tk.Entry(bottom_frame, font=("Arial", 14), relief="solid", bd=1, bg="#96A78D", fg="white")
+user_entry = tk.Entry(bottom_frame, font=("Arial", 14), relief="solid", bd=1, bg="#96A78D", fg="#ffffff")
 user_entry.insert(0, "Help")
 user_entry.pack(side="left", fill="x", expand=True, padx=(0, 10))
 user_entry.bind("<Return>", lambda event: send_message())
 
 send_button = tk.Button(
-    bottom_frame, text="⌯⌲", bg="#96A78D", fg="white", font=("Arial", 15, "bold"),
+    bottom_frame, text="⌯⌲", bg="#96A78D", fg="#ffffff", font=("Arial", 15, "bold"),
     width=3, command=send_message
 )
 send_button.pack(side="right")
