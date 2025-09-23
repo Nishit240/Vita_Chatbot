@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vita Chatbot</title>
+<style>
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #D9E9CF;
+}
+
+/* Floating button */
+#vita-btn {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: #96A78D;
+  color: #F0F0F0;
+  font-weight: bold;
+  font-size: 20px;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+  z-index: 1001;
+}
+
+#chatbot {
+  display: none;
+  position: fixed;
+  bottom: 80px;
+  right: 20px;
+  width: 440px;
+  height: 650px;
+  background-color: #96A78D;
+  border-radius: 10px;
+  flex-direction: column;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  z-index: 1000;
+}
+
+
+#chat-header {
+  background-color: #96A78D;
+  color: #F0F0F0;
+  font-family: Helvetica, Arial, sans-serif;
+  font-size: 20px;
+  font-weight: bold;
+  padding: 10px;
+  text-align: center;
+  border-bottom: 1px solid #F0F0F0;
+  cursor: pointer;
+}
+
+#messages {
+  flex: 1;
+  background-color: #F0F0F0;
+  padding: 10px;
+  overflow-y: auto;
+  font-size: 14px;
+}
+
+/* Message container */
+.message-row {
+  display: flex;
+  flex-direction: column;
+  margin: 5px 0;
+}
+
+.message-row.user {
+  align-items: flex-end;
+}
+
+.message-row.bot {
+  align-items: flex-start;
+}
+
+/* Time + icon row */
+.time-icon {
+  display: flex;
+  align-items: center;
+  font-size: 15px;
+  color: black;
+}
+
+.time-icon.user {
+  flex-direction: row-reverse;
+}
+
+.time-icon img {
+  width: 30px;
+  height: 30px;
+  margin: 0 5px;
+  border-radius: 50%;
+}
+
+/* Message bubble */
+.bubble {
+  padding: 5px 10px;
+  border-radius: 10px;
+  max-width: 80%;
+  margin-top: 2px;
+  word-wrap: break-word;
+}
+
+.bubble.bot {
+  background-color: #D9E9CF;
+  color: black;
+}
+
+.bubble.user {
+  background-color: #96A78D;
+  color: #F0F0F0;
+}
+
+/* Input area */
+#input-area {
+  display: flex;
+  border-top: 1px solid #F0F0F0;
+  padding: 10px;
+  background-color: #96A78D;
+}
+
+#user-input {
+  flex: 1;
+  padding: 10px;
+  font-size: 14px;
+  border: 1px solid #F0F0F0;
+  border-radius: 5px;
+  outline: none;
+  background-color: #96A78D;
+  color: #F0F0F0;
+}
+
+#send-btn {
+  padding: 0 15px;
+  margin-left: 10px;
+  background-color: #96A78D;
+  color: #F0F0F0;
+  font-size: 18px;
+  font-weight: bold;
+  border: none;
+  cursor: pointer;
+}
+
+/* Scrollbar */
+#messages::-webkit-scrollbar {
+  width: 6px;
+}
+#messages::-webkit-scrollbar-thumb {
+  background-color: rgba(0,0,0,0.2);
+  border-radius: 3px;
+}
+</style>
+</head>
+<body>
+
+<div id="vita-btn">🤖</div>
+
+<div id="chatbot">
+  <div id="chat-header">⌬ Vita Chatbot</div>
+  <div id="messages"></div>
+  <div id="input-area">
+    <input id="user-input" type="text" placeholder="Type a message..." />
+    <button id="send-btn">⌯⌲</button>
+  </div>
+</div>
+
+<script>
+const vitaBtn = document.getElementById("vita-btn");
+const chatbot = document.getElementById("chatbot");
+const sendBtn = document.getElementById("send-btn");
+const userInput = document.getElementById("user-input");
+const messages = document.getElementById("messages");
+
+// Toggle chatbot
+vitaBtn.addEventListener("click", () => {
+  chatbot.style.display = chatbot.style.display === "flex" ? "none" : "flex";
+});
+document.getElementById("chat-header").addEventListener("click", () => {
+  chatbot.style.display = "none";
+});
+
+// Add message function
+function addMessage(sender, message) {
+  const row = document.createElement("div");
+  row.className = `message-row ${sender === "You" ? "user" : "bot"}`;
+
+  // Time + icon
+  const timeRow = document.createElement("div");
+  timeRow.className = `time-icon ${sender === "You" ? "user" : "bot"}`;
+  const icon = document.createElement("img");
+  icon.src = sender === "You"
+    ? "static/logo/user.png"   // user icon
+    : "static/logo/technical-support.png"; // bot icon
+
+  const time = document.createElement("span");
+  const now = new Date();
+  time.innerText = now.getHours().toString().padStart(2,"0") + ":" + now.getMinutes().toString().padStart(2,"0");
+  timeRow.appendChild(icon);
+  timeRow.appendChild(time);
+
+  // Message bubble
+  const bubble = document.createElement("div");
+  bubble.className = `bubble ${sender === "You" ? "user" : "bot"}`;
+  bubble.innerText = message;
+
+  row.appendChild(timeRow);
+  row.appendChild(bubble);
+  messages.appendChild(row);
+  messages.scrollTop = messages.scrollHeight;
+}
+
+// Send message
+async function sendMessage() {
+  const msg = userInput.value.trim();
+  if (!msg) return;
+  addMessage("You", msg);
+  userInput.value = "";
+
+  try {
+    const res = await fetch("/chat", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ message: msg })
+    });
+    const data = await res.json();
+    addMessage("Vita", data.response);
+  } catch {
+    addMessage("Vita", "(Error connecting to server)");
+  }
+}
+
+sendBtn.addEventListener("click", sendMessage);
+userInput.addEventListener("keypress", e => {
+  if (e.key === "Enter") sendMessage();
+});
+
+// Add welcome messages
+addMessage("Vita", "Hello! I'm Vita, your assistant.");
+addMessage("Vita", "Type 'Help' to see what I can do.");
+</script>
+
+</body>
+</html>
