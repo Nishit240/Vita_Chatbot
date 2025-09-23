@@ -31,6 +31,8 @@ It provides a graphical user interface (GUI) where users can interact with the b
 
 - ✅ Integrate with a database for dynamic FAQs.
 
+- ✅ Integrate with a webpage.
+
 - Add natural language processing (NLP) for smarter answers.
 
 - Add voice input/output support like https://github.com/Nishit240/Voice-Assistant---ALEX.git.
