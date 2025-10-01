@@ -149,7 +149,7 @@ root.geometry("440x650")
 root.config(bg="#96A78D")
 
 title_label = tk.Label(root, text="⌬ Vita Chatbot", font=("Helvetica", 20, "bold"),
-                       fg="#ffffff", bg="#96A78D", pady=10)
+                       fg="#F0F0F0", bg="#96A78D", pady=10)
 title_label.pack(fill=tk.X)
 
 chat_area_frame = tk.Frame(root, bg="#F0F0F0")  
@@ -175,13 +175,13 @@ scrollbar.pack(side="right", fill="y")
 bottom_frame = tk.Frame(root, bg="#96A78D")
 bottom_frame.pack(side="bottom", fill="x", padx=10, pady=10)
 
-user_entry = tk.Entry(bottom_frame, font=("Arial", 14), relief="solid", bd=1, bg="#96A78D", fg="#ffffff")
+user_entry = tk.Entry(bottom_frame, font=("Arial", 14), relief="solid", bd=1, bg="#96A78D", fg="#F0F0F0")
 user_entry.insert(0, "Help")
 user_entry.pack(side="left", fill="x", expand=True, padx=(0, 10))
 user_entry.bind("<Return>", lambda event: send_message())
 
 send_button = tk.Button(
-    bottom_frame, text="⌯⌲", bg="#96A78D", fg="#ffffff", font=("Arial", 15, "bold"),
+    bottom_frame, text="⌯⌲", bg="#96A78D", fg="#F0F0F0", font=("Arial", 15, "bold"),
     width=3, command=send_message
 )
 send_button.pack(side="right")
