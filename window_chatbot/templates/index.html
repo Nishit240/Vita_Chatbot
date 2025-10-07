@@ -37,8 +37,8 @@ body {
   position: fixed;
   bottom: 80px;
   right: 20px;
-  width: 440px;
-  height: 650px;
+  width: 380px;
+  height: 500px;
   background-color: #96A78D;
   border-radius: 10px;
   flex-direction: column;
@@ -141,15 +141,26 @@ body {
 }
 
 #send-btn {
-  padding: 0 15px;
+  width: 40px;              /* make it square to form a circle */
+  height: 40px;             /* same as width */
+  padding: 0;               /* no extra padding */
   margin-left: 10px;
-  background-color: #96A78D;
+  background-color: #96A78D; /* initial background */
   color: #F0F0F0;
+  border-radius: 50%;       /* makes it a perfect circle */
+  border: 1px solid #F0F0F0; /* white border */
   font-size: 18px;
   font-weight: bold;
-  border: none;
   cursor: pointer;
+  transition: 0.3s;         /* smooth hover transition */
 }
+
+#send-btn:hover {
+  background-color: #F0F0F0; /* change background on hover */
+  color: #96A78D;            /* change text color on hover */
+  border-color: #96A78D;     /* optional: change border color too */
+}
+
 
 /* Scrollbar */
 #messages::-webkit-scrollbar {
