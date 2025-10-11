@@ -12,12 +12,18 @@ It provides a graphical user interface (GUI) where users can interact with the b
 
 ### 🖼️ Screenshots
 ### ✨ New ChatBot version 3.0
-<h3>Ui of the Vita</h3>
-<img width="682" height="800" alt="Screenshot 2025-09-25 154005" src="https://github.com/user-attachments/assets/35733c41-484b-486a-a49e-e3f596895989" />
+<h3>Ui of the Vita in my Portfolio</h3>
+<img width="1715" height="876" alt="Screenshot 2025-10-11 111436" src="https://github.com/user-attachments/assets/98456da6-153b-4464-af61-b5bd0fe44616" />
 
+<img width="1200" height="651" alt="Screenshot 2025-10-11 111534" src="https://github.com/user-attachments/assets/95658605-4107-4b71-8ea9-8951e2704f9b" />
 <hr>
 
 ### ✨ Old ChatBot version 2.0
+<h3>Ui of the Vita</h3>
+<img width="682" height="800" alt="Screenshot 2025-09-25 154005" src="https://github.com/user-attachments/assets/35733c41-484b-486a-a49e-e3f596895989" />
+<hr>
+
+### ✨ Old ChatBot version 1.0
 <h3>Ui of the Vita</h3>
 <img width="544" height="933" alt="Screenshot 2025-09-22 120335" src="https://github.com/user-attachments/assets/6782ba57-3f14-41b7-b84a-e5f7e4e4eae3" />
 
@@ -26,12 +32,6 @@ It provides a graphical user interface (GUI) where users can interact with the b
 
 <h3> Dynamic nature of the Vita</h3>
 <img width="1919" height="1045" alt="Screenshot 2025-09-22 120604" src="https://github.com/user-attachments/assets/d1d04304-78c8-4942-9a64-323134db8b22" />
-
-<hr>
-
-### ✨ Old ChatBot version 1.0
-<img width="620" height="787" alt="Screenshot 2025-09-16 164113" src="https://github.com/user-attachments/assets/5f13542b-e899-4ef6-8afc-c58f6ac3df70" />
-<img width="619" height="789" alt="Screenshot 2025-09-16 164134" src="https://github.com/user-attachments/assets/3d5e66c8-3d9d-4a0a-849c-f4195c564b04" />
 
 ### 📌 To-Do / Future Improvements
 
