@@ -1,11 +1,11 @@
 # 💬 Vita_Chatbot
-Vita is a simple chatbot built using Python and Tkinter.
+Vita is a simple chatbot built using Python.
 It provides a graphical user interface (GUI) where users can interact with the bot, ask FAQs, and even solve basic math problems.
 
 ### ✨ Features
 
-- 🖥️ GUI with Tkinter – Easy-to-use chat window with scrollable history.
-- 🤖 FAQ Support – Answers common company-related questions.
+- 🖥️ GUI – Easy-to-use chat window with scrollable history.
+- 🤖 FAQ Support – Answers common questions.
 - ➗ Math Solver – Handles basic arithmetic problems (e.g., 2+2, 10*5).
 - ⌨️ Keyboard Support – Press Enter to send messages quickly.
 - 🛠️ Customizable – Add or modify responses in the get_response() function.
