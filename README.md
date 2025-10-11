@@ -20,7 +20,7 @@ It provides a graphical user interface (GUI) where users can interact with the b
 
 ### ✨ Old ChatBot version 2.0
 <h3>Ui of the Vita</h3>
-<img width="682" height="800" alt="Screenshot 2025-09-25 154005" src="https://github.com/user-attachments/assets/35733c41-484b-486a-a49e-e3f596895989" />
+<img width="1280" height="720" alt="Untitled design" src="https://github.com/user-attachments/assets/3f2518a3-b93b-4ed4-a4b5-f4b46e663d80" />
 <hr>
 
 ### ✨ Old ChatBot version 1.0
